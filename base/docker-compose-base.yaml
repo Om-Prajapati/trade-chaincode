@@ -1,0 +1,129 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+
+  orderer.blockchain.com:
+    container_name: orderer.blockchain.com
+    image: hyperledger/fabric-orderer:$IMAGE_TAG
+    environment:
+      - ORDERER_GENERAL_LOGLEVEL=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=false
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+    - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+    - ../crypto-config/ordererOrganizations/blockchain.com/orderers/orderer.blockchain.com/msp:/var/hyperledger/orderer/msp
+    - ../crypto-config/ordererOrganizations/blockchain.com/orderers/orderer.blockchain.com/tls/:/var/hyperledger/orderer/tls
+    - orderer.blockchain.com:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+
+  peer0.importer.blockchain.com:
+    container_name: peer0.importer.blockchain.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.importer.blockchain.com
+      - CORE_PEER_ADDRESS=peer0.importer.blockchain.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.importer.blockchain.com:7051
+      - CORE_PEER_LOCALMSPID=ImporterMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/importer.blockchain.com/peers/peer0.importer.blockchain.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/importer.blockchain.com/peers/peer0.importer.blockchain.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.importer.blockchain.com:/var/hyperledger/production
+    ports:
+      - 7051:7051
+      - 7053:7053
+
+  peer0.exporter.blockchain.com:
+    container_name: peer0.exporter.blockchain.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.exporter.blockchain.com
+      - CORE_PEER_ADDRESS=peer0.exporter.blockchain.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.exporter.blockchain.com:7051
+      - CORE_PEER_LOCALMSPID=ExporterMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/exporter.blockchain.com/peers/peer0.exporter.blockchain.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/exporter.blockchain.com/peers/peer0.exporter.blockchain.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.exporter.blockchain.com:/var/hyperledger/production
+    ports:
+      - 8051:7051
+      - 8053:7053
+
+  peer0.importerbank.blockchain.com:
+    container_name: peer0.importerbank.blockchain.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.importerbank.blockchain.com
+      - CORE_PEER_ADDRESS=peer0.importerbank.blockchain.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.importerbank.blockchain.com:7051
+      - CORE_PEER_LOCALMSPID=ImporterbankMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/importerbank.blockchain.com/peers/peer0.importerbank.blockchain.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/importerbank.blockchain.com/peers/peer0.importerbank.blockchain.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.importerbank.blockchain.com:/var/hyperledger/production
+    ports:
+      - 9051:7051
+      - 9053:7053
+
+  peer0.exporterbank.blockchain.com:
+    container_name: peer0.exporterbank.blockchain.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.exporterbank.blockchain.com
+      - CORE_PEER_ADDRESS=peer0.exporterbank.blockchain.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.exporterbank.blockchain.com:7051
+      - CORE_PEER_LOCALMSPID=ExporterbankMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/exporterbank.blockchain.com/peers/peer0.exporterbank.blockchain.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/exporterbank.blockchain.com/peers/peer0.exporterbank.blockchain.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.exporterbank.blockchain.com:/var/hyperledger/production
+    ports:
+      - 10051:7051
+      - 10053:7053
+
+  peer0.custom.blockchain.com:
+    container_name: peer0.custom.blockchain.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.custom.blockchain.com
+      - CORE_PEER_ADDRESS=peer0.custom.blockchain.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.custom.blockchain.com:7051
+      - CORE_PEER_LOCALMSPID=CustomMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/custom.blockchain.com/peers/peer0.custom.blockchain.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/custom.blockchain.com/peers/peer0.custom.blockchain.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.custom.blockchain.com:/var/hyperledger/production
+    ports:
+      - 11051:7051
+      - 11053:7053
+

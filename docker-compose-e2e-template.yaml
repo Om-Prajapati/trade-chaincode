@@ -1,0 +1,150 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.blockchain.com:
+  peer0.importer.blockchain.com:
+  peer0.exporter.blockchain.com:
+  peer0.importerbank.blockchain.com:
+  peer0.exporterbank.blockchain.com:
+  peer0.custom.blockchain.com:
+
+networks:
+  byfn:
+services:
+  ca0:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-importer
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.importer.blockchain.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.importer.blockchain.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/importer.blockchain.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerimporter
+    networks:
+      - byfn
+
+  ca1:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-exporter
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.exporter.blockchain.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY
+    ports:
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.exporter.blockchain.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/exporter.blockchain.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerexporter
+    networks:
+      - byfn
+
+  ca2:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-importerbank
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.importerbank.blockchain.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY
+    ports:
+      - "9054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.importerbank.blockchain.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/importerbank.blockchain.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerimporterbank
+    networks:
+      - byfn
+
+  ca3:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-exporterbank
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.exporterbank.blockchain.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY
+    ports:
+      - "10054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.exporterbank.blockchain.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/exporterbank.blockchain.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerexporterbank
+    networks:
+      - byfn
+
+  ca4:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-custom
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.custom.blockchain.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY
+    ports:
+      - "11054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.custom.blockchain.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/custom.blockchain.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peercustom
+    networks:
+      - byfn
+
+  orderer.blockchain.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.blockchain.com
+    container_name: orderer.blockchain.com
+    networks:
+      - byfn
+
+  peer0.importer.blockchain.com:
+    container_name: peer0.importer.blockchain.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.importer.blockchain.com
+    networks:
+      - byfn
+
+  peer0.exporter.blockchain.com:
+    container_name: peer0.exporter.blockchain.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.exporter.blockchain.com
+    networks:
+      - byfn
+
+  peer0.importerbank.blockchain.com:
+    container_name: peer0.importerbank.blockchain.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.importerbank.blockchain.com
+    networks:
+      - byfn
+
+  peer0.exporterbank.blockchain.com:
+    container_name: peer0.exporterbank.blockchain.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.exporterbank.blockchain.com
+    networks:
+      - byfn
+
+  peer0.custom.blockchain.com:
+    container_name: peer0.custom.blockchain.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.custom.blockchain.com
+    networks:
+      - byfn
