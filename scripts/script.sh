@@ -20,7 +20,8 @@ TIMEOUT="$4"
 LANGUAGE=`echo "$LANGUAGE" | tr [:upper:] [:lower:]`
 COUNTER=1
 MAX_RETRY=5
-ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/blockchain.com/orderers/orderer.blockchain.com/msp/tlscacerts/tlsca.blockchain.com-cert.pem
+CORE_PEER_TLS_ENABLED="false"
+ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/bridgeit.com/orderers/orderer.bridgeit.com/msp/tlscacerts/tlsca.bridgeit.com-cert.pem
 
 CC_SRC_PATH="github.com/chaincode/chaincode_example02/go/"
 if [ "$LANGUAGE" = "node" ]; then
@@ -33,16 +34,20 @@ echo "Channel name : "$CHANNEL_NAME
 . scripts/utils.sh
 
 createChannel() {
-	setGlobals 0 1
+	# setGlobals 0 1
+	# setGlobals 0 2
+	# setGlobals 0 3
+	# setGlobals 0 4
+	# setGlobals 0 5
 
 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
                 set -x
-		peer channel create -o orderer.blockchain.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx >&log.txt
+		peer channel create -o orderer.bridgeit.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx >&log.txt
 		res=$?
                 set +x
 	else
-				set -x
-		peer channel create -o orderer.blockchain.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
+		set -x
+		peer channel create -o orderer.bridgeit.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
 		res=$?
 				set +x
 	fi
@@ -53,8 +58,8 @@ createChannel() {
 }
 
 joinChannel () {
-	for org in 1 2; do
-	    for peer in 0 1; do
+	for org in 1 2 3 4 5; do
+	    for peer in 0; do
 		joinChannelWithRetry $peer $org
 		echo "===================== peer${peer}.org${org} joined on the channel \"$CHANNEL_NAME\" ===================== "
 		sleep $DELAY
@@ -72,48 +77,42 @@ echo "Having all peers join the channel..."
 joinChannel
 
 ## Set the anchor peers for each org in the channel
-echo "Updating anchor peers for importer..."
+echo "Updating anchor peers for Importer..."
 updateAnchorPeers 0 1
-echo "Updating anchor peers for exporter..."
+echo "Updating anchor peers for Exporter..."
 updateAnchorPeers 0 2
-echo "Updating anchor peers for importerbank..."
+echo "Updating anchor peers for Importerbank..."
 updateAnchorPeers 0 3
-echo "Updating anchor peers for exporterbank..."
+echo "Updating anchor peers for Exporterbank..."
 updateAnchorPeers 0 4
-echo "Updating anchor peers for custom..."
+echo "Updating anchor peers for Custom..."
 updateAnchorPeers 0 5
 
-## Install chaincode on peer0.importer, peer0.exporter , peer0.importerbank ,peer0.exporterbank and peer0.custom
-echo "Installing chaincode on peer0.importer..."
+
+## Install chaincode on peer0.org1 and peer0.org2
+#echo "Installing chaincode on peer0.org1..."
 #installChaincode 0 1
-echo "Install chaincode on peer0.exporter..."
+#echo "Install chaincode on peer0.org2..."
 #installChaincode 0 2
-echo "Installing chaincode on peer0.importerbank..."
-#installChaincode 0 3
-echo "Install chaincode on peer0.exporterbank..."
-#installChaincode 0 4
-echo "Installing chaincode on peer0.custom..."
-#installChaincode 0 5
 
-
-# Instantiate chaincode on peer0.exporter
-echo "Instantiating chaincode on peer0.exporter..."
+# Instantiate chaincode on peer0.org2
+#echo "Instantiating chaincode on peer0.org2..."
 #instantiateChaincode 0 2
 
-# Query chaincode on peer0.importer
-echo "Querying chaincode on peer0.importer..."
+# Query chaincode on peer0.org1
+#echo "Querying chaincode on peer0.org1..."
 #chaincodeQuery 0 1 100
 
-# Invoke chaincode on peer0.importer
-echo "Sending invoke transaction on peer0.importer..."
+# Invoke chaincode on peer0.org1
+#echo "Sending invoke transaction on peer0.org1..."
 #chaincodeInvoke 0 1
 
-## Install chaincode on peer1.exporter
-echo "Installing chaincode on peer1.exporter..."
+## Install chaincode on peer1.org2
+#echo "Installing chaincode on peer1.org2..."
 #installChaincode 1 2
 
-# Query on chaincode on peer1.exporter, check if the result is 90
-echo "Querying chaincode on peer1.exporter..."
+# Query on chaincode on peer1.org2, check if the result is 90
+#echo "Querying chaincode on peer1.org2..."
 #chaincodeQuery 1 2 90
 
 echo

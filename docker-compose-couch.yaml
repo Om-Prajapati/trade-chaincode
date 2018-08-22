@@ -6,7 +6,7 @@
 version: '2'
 
 networks:
-  byfn:
+  trade:
 
 services:
   couchdb0:
@@ -18,13 +18,13 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
     # Comment/Uncomment the port mapping if you want to hide/expose the CouchDB service,
-    # for blockchain map it to utilize Fauxton User Interface in dev environments.
+    # for bridgeit map it to utilize Fauxton User Interface in dev environments.
     ports:
       - "5984:5984"
     networks:
-      - byfn
+      - trade
 
-  peer0.importer.blockchain.com:
+  peer0.importer.bridgeit.com:
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
@@ -45,13 +45,13 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
     # Comment/Uncomment the port mapping if you want to hide/expose the CouchDB service,
-    # for blockchain map it to utilize Fauxton User Interface in dev environments.
+    # for bridgeit map it to utilize Fauxton User Interface in dev environments.
     ports:
       - "6984:5984"
     networks:
-      - byfn
+      - trade
 
-  peer0.exporter.blockchain.com:
+  peer0.exporter.bridgeit.com:
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
@@ -72,13 +72,13 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
     # Comment/Uncomment the port mapping if you want to hide/expose the CouchDB service,
-    # for blockchain map it to utilize Fauxton User Interface in dev environments.
+    # for bridgeit map it to utilize Fauxton User Interface in dev environments.
     ports:
       - "7984:5984"
     networks:
-      - byfn
+      - trade
 
-  peer0.importerbank.blockchain.com:
+  peer0.importerbank.bridgeit.com:
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
@@ -99,13 +99,13 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
     # Comment/Uncomment the port mapping if you want to hide/expose the CouchDB service,
-    # for blockchain map it to utilize Fauxton User Interface in dev environments.
+    # for bridgeit map it to utilize Fauxton User Interface in dev environments.
     ports:
       - "8984:5984"
     networks:
-      - byfn
+      - trade
 
-  peer0.exporterbank.blockchain.com:
+  peer0.exporterbank.bridgeit.com:
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
@@ -127,13 +127,13 @@ services:
       - COUCHDB_USER=
       - COUCHDB_PASSWORD=
     # Comment/Uncomment the port mapping if you want to hide/expose the CouchDB service,
-    # for blockchain map it to utilize Fauxton User Interface in dev environments.
+    # for bridgeit map it to utilize Fauxton User Interface in dev environments.
     ports:
       - "9984:5984"
     networks:
-      - byfn
+      - trade
 
-  peer0.custom.blockchain.com:
+  peer0.custom.bridgeit.com:
     environment:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb4:5984

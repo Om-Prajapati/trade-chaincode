@@ -6,66 +6,65 @@
 version: '2'
 
 volumes:
-  orderer.blockchain.com:
-  peer0.importer.blockchain.com:
-  peer0.exporter.blockchain.com:
-  peer0.importerbank.blockchain.com:
-  peer0.exporterbank.blockchain.com:
-  peer0.custom.blockchain.com:
-
-
+  orderer.bridgeit.com:
+  peer0.importer.bridgeit.com:
+  peer0.exporter.bridgeit.com:
+  peer0.importerbank.bridgeit.com:
+  peer0.exporterbank.bridgeit.com:
+  peer0.custom.bridgeit.com:
+  
 networks:
-  byfn:
+  trade:
 
 services:
 
-  orderer.blockchain.com:
+  orderer.bridgeit.com:
     extends:
       file:   base/docker-compose-base.yaml
-      service: orderer.blockchain.com
-    container_name: orderer.blockchain.com
+      service: orderer.bridgeit.com
+    container_name: orderer.bridgeit.com
     networks:
-      - byfn
+      - trade
 
-  peer0.importer.blockchain.com:
-    container_name: peer0.importer.blockchain.com
+  peer0.importer.bridgeit.com:
+    container_name: peer0.importer.bridgeit.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.importer.blockchain.com
+      service: peer0.importer.bridgeit.com
     networks:
-      - byfn
+      - trade
 
-  peer0.exporter.blockchain.com:
-    container_name: peer0.exporter.blockchain.com
+  peer0.exporter.bridgeit.com:
+    container_name: peer0.exporter.bridgeit.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.exporter.blockchain.com
+      service: peer0.exporter.bridgeit.com
     networks:
-      - byfn
+      - trade
 
-  peer0.importerbank.blockchain.com:
-    container_name: peer0.importerbank.blockchain.com
+  peer0.importerbank.bridgeit.com:
+    container_name: peer0.importerbank.bridgeit.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.importerbank.blockchain.com
+      service: peer0.importerbank.bridgeit.com
     networks:
-      - byfn
+      - trade
 
-  peer0.exporterbank.blockchain.com:
-    container_name: peer0.exporterbank.blockchain.com
+  peer0.exporterbank.bridgeit.com:
+    container_name: peer0.exporterbank.bridgeit.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.exporterbank.blockchain.com
+      service: peer0.exporterbank.bridgeit.com
     networks:
-      - byfn
+      - trade
 
-  peer0.custom.blockchain.com:
-    container_name: peer0.custom.blockchain.com
+  peer0.custom.bridgeit.com:
+    container_name: peer0.custom.bridgeit.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.custom.blockchain.com
+      service: peer0.custom.bridgeit.com
     networks:
-      - byfn
+      - trade
 
 
   cli:
@@ -79,13 +78,13 @@ services:
       #- CORE_LOGGING_LEVEL=DEBUG
       - CORE_LOGGING_LEVEL=INFO
       - CORE_PEER_ID=cli
-      - CORE_PEER_ADDRESS=peer0.importer.blockchain.com:7051
+      - CORE_PEER_ADDRESS=peer0.importer.bridgeit.com:7051
       - CORE_PEER_LOCALMSPID=ImporterMSP
-      - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.blockchain.com/peers/peer0.importer.blockchain.com/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.blockchain.com/peers/peer0.importer.blockchain.com/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.blockchain.com/peers/peer0.importer.blockchain.com/tls/ca.crt
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.blockchain.com/users/Admin@importer.blockchain.com/msp
+      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.bridgeit.com/peers/peer0.importer.bridgeit.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.bridgeit.com/peers/peer0.importer.bridgeit.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.bridgeit.com/peers/peer0.importer.bridgeit.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.bridgeit.com/users/Admin@importer.bridgeit.com/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:
@@ -95,11 +94,11 @@ services:
         - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
         - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
-      - orderer.blockchain.com
-      - peer0.importer.blockchain.com
-      - peer0.exporter.blockchain.com
-      - peer0.importerbank.blockchain.com
-      - peer0.exporterbank.blockchain.com
-      - peer0.custom.blockchain.com
+      - orderer.bridgeit.com
+      - peer0.importer.bridgeit.com
+      - peer0.exporter.bridgeit.com
+      - peer0.importerbank.bridgeit.com
+      - peer0.exporterbank.bridgeit.com
+      - peer0.custom.bridgeit.com
     networks:
-      - byfn
+      - trade

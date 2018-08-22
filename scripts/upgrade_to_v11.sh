@@ -13,18 +13,18 @@ CHANNEL_NAME="$1"
 DELAY="$2"
 LANGUAGE="$3"
 TIMEOUT="$4"
-: ${CHANNEL_NAME:="mychannel"}
+: ${CHANNEL_NAME:="trade_channel"}
 : ${DELAY:="5"}
 : ${LANGUAGE:="golang"}
 : ${TIMEOUT:="10"}
 LANGUAGE=`echo "$LANGUAGE" | tr [:upper:] [:lower:]`
 COUNTER=1
 MAX_RETRY=5
-ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/blockchain.com/orderers/orderer.blockchain.com/msp/tlscacerts/tlsca.blockchain.com-cert.pem
+ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/bridgeit.com/orderers/orderer.bridgeit.com/msp/tlscacerts/tlsca.bridgeit.com-cert.pem
 
-CC_SRC_PATH="github.com/chaincode/chaincode_example02/go/"
+CC_SRC_PATH="github.com/chaincode/chaincode_bridgeit02/go/"
 if [ "$LANGUAGE" = "node" ]; then
-        CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/chaincode_example02/node/"
+        CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/chaincode_bridgeit02/node/"
 fi
 
 echo "Channel name : "$CHANNEL_NAME
@@ -86,12 +86,12 @@ addCapabilityToChannel() {
 
         if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
                 set -x
-                peer channel update -f config_update_in_envelope.pb -c $CH_NAME -o orderer.blockchain.com:7050 --cafile $ORDERER_CA
+                peer channel update -f config_update_in_envelope.pb -c $CH_NAME -o orderer.bridgeit.com:7050 --cafile $ORDERER_CA
                 res=$?
                 set +x
         else
                 set -x
-                peer channel update -f config_update_in_envelope.pb -c $CH_NAME -o orderer.blockchain.com:7050 --tls true --cafile $ORDERER_CA
+                peer channel update -f config_update_in_envelope.pb -c $CH_NAME -o orderer.bridgeit.com:7050 --tls true --cafile $ORDERER_CA
                 res=$?
                 set +x
         fi
@@ -134,29 +134,29 @@ sleep $DELAY
 echo "Config update for /Channel on \"$CHANNEL_NAME\""
 addCapabilityToChannel $CHANNEL_NAME channel
 
-#Query on chaincode on Peer0/Org1
-echo "Querying chaincode on org1/peer0..."
-#chaincodeQuery 0 1 90
+# #Query on chaincode on Peer0/Org1
+# echo "Querying chaincode on org1/peer0..."
+# chaincodeQuery 0 1 90
 
-#Invoke on chaincode on Peer0/Org1
-echo "Sending invoke transaction on org1/peer0..."
-#chaincodeInvoke 0 1
+# #Invoke on chaincode on Peer0/Org1
+# echo "Sending invoke transaction on org1/peer0..."
+# chaincodeInvoke 0 1
 
-sleep $DELAY
+# sleep $DELAY
 
-#Query on chaincode on Peer0/Org1
-echo "Querying chaincode on org1/peer0..."
-#chaincodeQuery 0 1 80
+# #Query on chaincode on Peer0/Org1
+# echo "Querying chaincode on org1/peer0..."
+# chaincodeQuery 0 1 80
 
-##Invoke on chaincode on Peer0/Org2
-echo "Sending invoke transaction on org2/peer0..."
-#chaincodeInvoke 0 2
+# ##Invoke on chaincode on Peer0/Org2
+# echo "Sending invoke transaction on org2/peer0..."
+# chaincodeInvoke 0 2
 
-sleep $DELAY
+# sleep $DELAY
 
-#Query on chaincode on Peer0/Org2
-echo "Querying chaincode on org2/peer0..."
-#chaincodeQuery 0 2 70
+# #Query on chaincode on Peer0/Org2
+# echo "Querying chaincode on org2/peer0..."
+# chaincodeQuery 0 2 70
 
 echo
 echo "===================== All GOOD, End-2-End UPGRADE Scenario execution completed ===================== "

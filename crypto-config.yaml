@@ -11,7 +11,7 @@ OrdererOrgs:
   # Orderer
   # ---------------------------------------------------------------------------
   - Name: Orderer
-    Domain: blockchain.com
+    Domain: bridgeit.com
     # ---------------------------------------------------------------------------
     # "Specs" - See PeerOrgs below for complete description
     # ---------------------------------------------------------------------------
@@ -25,7 +25,7 @@ PeerOrgs:
   # Org1
   # ---------------------------------------------------------------------------
   - Name: Importer
-    Domain: importer.blockchain.com
+    Domain: importer.bridgeit.com
     EnableNodeOUs: true
     # ---------------------------------------------------------------------------
     # "Specs"
@@ -75,7 +75,7 @@ PeerOrgs:
   # Org2: See "Org1" for full specification
   # ---------------------------------------------------------------------------
   - Name: Exporter
-    Domain: exporter.blockchain.com
+    Domain: exporter.bridgeit.com
     EnableNodeOUs: true
     Template:
       Count: 1
@@ -83,7 +83,7 @@ PeerOrgs:
       Count: 1
   # ---------------------------------------------------------------------------
   - Name: Importerbank
-    Domain: importerbank.blockchain.com
+    Domain: importerbank.bridgeit.com
     EnableNodeOUs: true
     Template:
       Count: 1
@@ -91,7 +91,7 @@ PeerOrgs:
       Count: 1
   # ---------------------------------------------------------------------------
   - Name: Exporterbank
-    Domain: exporterbank.blockchain.com
+    Domain: exporterbank.bridgeit.com
     EnableNodeOUs: true
     Template:
       Count: 1
@@ -99,7 +99,7 @@ PeerOrgs:
       Count: 1
   # ---------------------------------------------------------------------------
   - Name: Custom
-    Domain: custom.blockchain.com
+    Domain: custom.bridgeit.com
     EnableNodeOUs: true
     Template:
       Count: 1

@@ -20,8 +20,8 @@ verifyResult () {
 # Set OrdererOrg.Admin globals
 setOrdererGlobals() {
         CORE_PEER_LOCALMSPID="OrdererMSP"
-        CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/blockchain.com/orderers/orderer.blockchain.com/msp/tlscacerts/tlsca.blockchain.com-cert.pem
-        CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/blockchain.com/users/Admin@blockchain.com/msp
+        CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/bridgeit.com/orderers/orderer.bridgeit.com/msp/tlscacerts/tlsca.bridgeit.com-cert.pem
+        CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/bridgeit.com/users/Admin@bridgeit.com/msp
 }
 
 setGlobals () {
@@ -29,53 +29,52 @@ setGlobals () {
 	ORG=$2
 	if [ $ORG -eq 1 ] ; then
 		CORE_PEER_LOCALMSPID="ImporterMSP"
-		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.blockchain.com/peers/peer0.importer.blockchain.com/tls/ca.crt
-		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.blockchain.com/users/Admin@importer.blockchain.com/msp
+		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.bridgeit.com/peers/peer0.importer.bridgeit.com/tls/ca.crt
+		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importer.bridgeit.com/users/Admin@importer.bridgeit.com/msp
 		if [ $PEER -eq 0 ]; then
-			CORE_PEER_ADDRESS=peer0.importer.blockchain.com:7051
-		else
-			CORE_PEER_ADDRESS=peer0.importer.example.com:7051
+			CORE_PEER_ADDRESS=peer0.importer.bridgeit.com:7051
+		# else
+		# 	CORE_PEER_ADDRESS=peer1.importer.bridgeit.com:7051
 		fi
 	elif [ $ORG -eq 2 ] ; then
 		CORE_PEER_LOCALMSPID="ExporterMSP"
-		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/exporter.blockchain.com/peers/peer0.exporter.blockchain.com/tls/ca.crt
-		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/exporter.blockchain.com/users/Admin@exporter.blockchain.com/msp
+		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/exporter.bridgeit.com/peers/peer0.exporter.bridgeit.com/tls/ca.crt
+		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/exporter.bridgeit.com/users/Admin@exporter.bridgeit.com/msp
 		if [ $PEER -eq 0 ]; then
-			CORE_PEER_ADDRESS=peer0.exporter.blockchain.com:7051
-		else
-			CORE_PEER_ADDRESS=peer0.exporter.blockchain.com:7051
+			CORE_PEER_ADDRESS=peer0.exporter.bridgeit.com:7051
+		# else
+		# 	CORE_PEER_ADDRESS=peer1.exporter.bridgeit.com:7051
 		fi
 
 	elif [ $ORG -eq 3 ] ; then
-		CORE_PEER_LOCALMSPID="ExporterbankMSP"
-		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/exporterbank.blockchain.com/peers/peer0.exporterbank.blockchain.com/tls/ca.crt
-		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/exporterbank.blockchain.com/users/Admin@exporterbank.blockchain.com/msp
+		CORE_PEER_LOCALMSPID="ImporterbankMSP"
+		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importerbank.bridgeit.com/peers/peer0.importerbank.bridgeit.com/tls/ca.crt
+		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importerbank.bridgeit.com/users/Admin@importerbank.bridgeit.com/msp
 		if [ $PEER -eq 0 ]; then
-			CORE_PEER_ADDRESS=peer0.exporterbank.blockchain.com:7051
-		else
-			CORE_PEER_ADDRESS=peer0.exporterbank.blockchain.com:7051
+			CORE_PEER_ADDRESS=peer0.importerbank.bridgeit.com:7051
+		# else
+		# 	CORE_PEER_ADDRESS=peer1.importerbank.bridgeit.com:7051
 		fi
 
 	elif [ $ORG -eq 4 ] ; then
-		CORE_PEER_LOCALMSPID="ImporterbankMSP"
-		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importerbank.blockchain.com/peers/peer0.importerbank.blockchain.com/tls/ca.crt
-		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/importerbank.blockchain.com/users/Admin@importerbank.blockchain.com/msp
+		CORE_PEER_LOCALMSPID="ExporterbankMSP"
+		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/exporterbank.bridgeit.com/peers/peer0.exporterbank.bridgeit.com/tls/ca.crt
+		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/exporterbank.bridgeit.com/users/Admin@exporterbank.bridgeit.com/msp
 		if [ $PEER -eq 0 ]; then
-			CORE_PEER_ADDRESS=peer0.importerbank.blockchain.com:7051
-		else
-			CORE_PEER_ADDRESS=peer0.importerbank.blockchain.com:7051
+			CORE_PEER_ADDRESS=peer0.exporterbank.bridgeit.com:7051
+		# else
+		# 	CORE_PEER_ADDRESS=peer1.exporterbank.bridgeit.com:7051
 		fi
 
 	elif [ $ORG -eq 5 ] ; then
 		CORE_PEER_LOCALMSPID="CustomMSP"
-		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/custom.blockchain.com/peers/peer0.custom.blockchain.com/tls/ca.crt
-		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/custom.blockchain.com/users/Admin@custom.blockchain.com/msp
+		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/custom.bridgeit.com/peers/peer0.custom.bridgeit.com/tls/ca.crt
+		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/custom.bridgeit.com/users/Admin@custom.bridgeit.com/msp
 		if [ $PEER -eq 0 ]; then
-			CORE_PEER_ADDRESS=peer0.custom.blockchain.com:7051
-		else
-			CORE_PEER_ADDRESS=peer0.custom.blockchain.com:7051
+			CORE_PEER_ADDRESS=peer0.custom.bridgeit.com:7051
+		# else
+		# 	CORE_PEER_ADDRESS=peer1.custom.bridgeit.com:7051
 		fi
-
 	else
 		echo "================== ERROR !!! ORG Unknown =================="
 	fi
@@ -91,12 +90,12 @@ updateAnchorPeers() {
 
   if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
                 set -x
-		peer channel update -o orderer.blockchain.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx >&log.txt
+		peer channel update -o orderer.bridgeit.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx >&log.txt
 		res=$?
                 set +x
   else
                 set -x
-		peer channel update -o orderer.blockchain.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
+		peer channel update -o orderer.bridgeit.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt
 		res=$?
                 set +x
   fi
@@ -112,7 +111,6 @@ joinChannelWithRetry () {
 	PEER=$1
 	ORG=$2
 	setGlobals $PEER $ORG
-
         set -x
 	peer channel join -b $CHANNEL_NAME.block  >&log.txt
 	res=$?
@@ -129,94 +127,94 @@ joinChannelWithRetry () {
 	verifyResult $res "After $MAX_RETRY attempts, peer${PEER}.org${ORG} has failed to Join the Channel"
 }
 
-installChaincode () {
-	PEER=$1
-	ORG=$2
-	setGlobals $PEER $ORG
-	VERSION=${3:-1.0}
-        set -x
-	peer chaincode install -n mycc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
-	res=$?
-        set +x
-	cat log.txt
-	verifyResult $res "Chaincode installation on peer${PEER}.org${ORG} has Failed"
-	echo "===================== Chaincode is installed on peer${PEER}.org${ORG} ===================== "
-	echo
-}
+# installChaincode () {
+# 	PEER=$1
+# 	ORG=$2
+# 	setGlobals $PEER $ORG
+# 	VERSION=${3:-1.0}
+#         set -x
+# 	peer chaincode install -n mycc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
+# 	res=$?
+#         set +x
+# 	cat log.txt
+# 	verifyResult $res "Chaincode installation on peer${PEER}.org${ORG} has Failed"
+# 	echo "===================== Chaincode is installed on peer${PEER}.org${ORG} ===================== "
+# 	echo
+# }
 
-instantiateChaincode () {
-	PEER=$1
-	ORG=$2
-	setGlobals $PEER $ORG
-	VERSION=${3:-1.0}
+# instantiateChaincode () {
+# 	PEER=$1
+# 	ORG=$2
+# 	setGlobals $PEER $ORG
+# 	VERSION=${3:-1.0}
 
-	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
-	# lets supply it directly as we know it using the "-o" option
-	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
-                set -x
-		peer chaincode instantiate -o orderer.blockchain.com:7050 -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init","a","100","b","200"]}' -P "OR	('ImporterMSP.peer','ExporterMSP.peer')" >&log.txt
-		res=$?
-                set +x
-	else
-                set -x
-		peer chaincode instantiate -o orderer.blockchain.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('ImporterMSP.peer','ExporterMSP.peer')" >&log.txt
-		res=$?
-                set +x
-	fi
-	cat log.txt
-	verifyResult $res "Chaincode instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' failed"
-	echo "===================== Chaincode Instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
-	echo
-}
+# 	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
+# 	# lets supply it directly as we know it using the "-o" option
+# 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
+#                 set -x
+# 		peer chaincode instantiate -o orderer.bridgeit.com:7050 -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init","a","100","b","200"]}' -P "OR	('importerMSP.peer','Org2MSP.peer')" >&log.txt
+# 		res=$?
+#                 set +x
+# 	else
+#                 set -x
+# 		peer chaincode instantiate -o orderer.bridgeit.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('importerMSP.peer','Org2MSP.peer')" >&log.txt
+# 		res=$?
+#                 set +x
+# 	fi
+# 	cat log.txt
+# 	verifyResult $res "Chaincode instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' failed"
+# 	echo "===================== Chaincode Instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
+# 	echo
+# }
 
-upgradeChaincode () {
-    PEER=$1
-    ORG=$2
-    setGlobals $PEER $ORG
+# upgradeChaincode () {
+#     PEER=$1
+#     ORG=$2
+#     setGlobals $PEER $ORG
 
-    set -x
-    peer chaincode upgrade -o orderer.blockchain.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 2.0 -c '{"Args":["init","a","90","b","210"]}' -P "OR ('ImporterMSP.peer','ExporterMSP.peer','Org3MSP.peer')"
-    res=$?
-	set +x
-    cat log.txt
-    verifyResult $res "Chaincode upgrade on org${ORG} peer${PEER} has Failed"
-    echo "===================== Chaincode is upgraded on org${ORG} peer${PEER} ===================== "
-    echo
-}
+#     set -x
+#     peer chaincode upgrade -o orderer.bridgeit.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 2.0 -c '{"Args":["init","a","90","b","210"]}' -P "OR ('importerMSP.peer','Org2MSP.peer','Org3MSP.peer')"
+#     res=$?
+# 	set +x
+#     cat log.txt
+#     verifyResult $res "Chaincode upgrade on org${ORG} peer${PEER} has Failed"
+#     echo "===================== Chaincode is upgraded on org${ORG} peer${PEER} ===================== "
+#     echo
+# }
 
-chaincodeQuery () {
-  PEER=$1
-  ORG=$2
-  setGlobals $PEER $ORG
-  EXPECTED_RESULT=$3
-  echo "===================== Querying on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME'... ===================== "
-  local rc=1
-  local starttime=$(date +%s)
+# chaincodeQuery () {
+#   PEER=$1
+#   ORG=$2
+#   setGlobals $PEER $ORG
+#   EXPECTED_RESULT=$3
+#   echo "===================== Querying on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME'... ===================== "
+#   local rc=1
+#   local starttime=$(date +%s)
 
-  # continue to poll
-  # we either get a successful response, or reach TIMEOUT
-  while test "$(($(date +%s)-starttime))" -lt "$TIMEOUT" -a $rc -ne 0
-  do
-     sleep $DELAY
-     echo "Attempting to Query peer${PEER}.org${ORG} ...$(($(date +%s)-starttime)) secs"
-     set -x
-     peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt
-	 res=$?
-     set +x
-     test $res -eq 0 && VALUE=$(cat log.txt | awk '/Query Result/ {print $NF}')
-     test "$VALUE" = "$EXPECTED_RESULT" && let rc=0
-  done
-  echo
-  cat log.txt
-  if test $rc -eq 0 ; then
-	echo "===================== Query on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
-  else
-	echo "!!!!!!!!!!!!!!! Query result on peer${PEER}.org${ORG} is INVALID !!!!!!!!!!!!!!!!"
-        echo "================== ERROR !!! FAILED to execute End-2-End Scenario =================="
-	echo
-	exit 1
-  fi
-}
+#   # continue to poll
+#   # we either get a successful response, or reach TIMEOUT
+#   while test "$(($(date +%s)-starttime))" -lt "$TIMEOUT" -a $rc -ne 0
+#   do
+#      sleep $DELAY
+#      echo "Attempting to Query peer${PEER}.org${ORG} ...$(($(date +%s)-starttime)) secs"
+#      set -x
+#      peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt
+# 	 res=$?
+#      set +x
+#      test $res -eq 0 && VALUE=$(cat log.txt | awk '/Query Result/ {print $NF}')
+#      test "$VALUE" = "$EXPECTED_RESULT" && let rc=0
+#   done
+#   echo
+#   cat log.txt
+#   if test $rc -eq 0 ; then
+# 	echo "===================== Query on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
+#   else
+# 	echo "!!!!!!!!!!!!!!! Query result on peer${PEER}.org${ORG} is INVALID !!!!!!!!!!!!!!!!"
+#         echo "================== ERROR !!! FAILED to execute End-2-End Scenario =================="
+# 	echo
+# 	exit 1
+#   fi
+# }
 
 # fetchChannelConfig <channel_id> <output_json>
 # Writes the current channel config for a given channel to a JSON file
@@ -229,11 +227,11 @@ fetchChannelConfig() {
   echo "Fetching the most recent configuration block for the channel"
   if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
     set -x
-    peer channel fetch config config_block.pb -o orderer.blockchain.com:7050 -c $CHANNEL --cafile $ORDERER_CA
+    peer channel fetch config config_block.pb -o orderer.bridgeit.com:7050 -c $CHANNEL --cafile $ORDERER_CA
     set +x
   else
     set -x
-    peer channel fetch config config_block.pb -o orderer.blockchain.com:7050 -c $CHANNEL --tls --cafile $ORDERER_CA
+    peer channel fetch config config_block.pb -o orderer.bridgeit.com:7050 -c $CHANNEL --tls --cafile $ORDERER_CA
     set +x
   fi
 
@@ -272,25 +270,25 @@ createConfigUpdate() {
   set +x
 }
 
-chaincodeInvoke () {
-	PEER=$1
-	ORG=$2
-	setGlobals $PEER $ORG
-	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
-	# lets supply it directly as we know it using the "-o" option
-	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
-                set -x
-		peer chaincode invoke -o orderer.blockchain.com:7050 -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
-		res=$?
-                set +x
-	else
-                set -x
-		peer chaincode invoke -o orderer.blockchain.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
-		res=$?
-                set +x
-	fi
-	cat log.txt
-	verifyResult $res "Invoke execution on peer${PEER}.org${ORG} failed "
-	echo "===================== Invoke transaction on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
-	echo
-}
+# chaincodeInvoke () {
+# 	PEER=$1
+# 	ORG=$2
+# 	setGlobals $PEER $ORG
+# 	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
+# 	# lets supply it directly as we know it using the "-o" option
+# 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
+#                 set -x
+# 		peer chaincode invoke -o orderer.bridgeit.com:7050 -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
+# 		res=$?
+#                 set +x
+# 	else
+#                 set -x
+# 		peer chaincode invoke -o orderer.bridgeit.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
+# 		res=$?
+#                 set +x
+# 	fi
+# 	cat log.txt
+# 	verifyResult $res "Invoke execution on peer${PEER}.org${ORG} failed "
+# 	echo "===================== Invoke transaction on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
+# 	echo
+# }

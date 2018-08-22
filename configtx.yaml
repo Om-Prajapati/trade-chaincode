@@ -66,7 +66,7 @@ Organizations:
         ID: OrdererMSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: crypto-config/ordererOrganizations/blockchain.com/msp
+        MSPDir: crypto-config/ordererOrganizations/bridgeit.com/msp
 
     - &Importer
         # DefaultOrg defines the organization which is used in the sampleconfig
@@ -76,43 +76,43 @@ Organizations:
         # ID to load the MSP definition as
         ID: ImporterMSP
 
-        MSPDir: crypto-config/peerOrganizations/importer.blockchain.com/msp
+        MSPDir: crypto-config/peerOrganizations/importer.bridgeit.com/msp
 
         AnchorPeers:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.importer.blockchain.com
+            - Host: peer0.importer.bridgeit.com
               Port: 7051
 
     - &Exporter
         Name: ExporterMSP
         ID: ExporterMSP
-        MSPDir: crypto-config/peerOrganizations/exporter.blockchain.com/msp
+        MSPDir: crypto-config/peerOrganizations/exporter.bridgeit.com/msp
         AnchorPeers:
-            - Host: peer0.exporter.blockchain.com
+            - Host: peer0.exporter.bridgeit.com
               Port: 7051
 
     - &Importerbank
         Name: ImporterbankMSP
         ID: ImporterbankMSP
-        MSPDir: crypto-config/peerOrganizations/importerbank.blockchain.com/msp
+        MSPDir: crypto-config/peerOrganizations/importerbank.bridgeit.com/msp
         AnchorPeers:
-            - Host: peer0.importerbank.blockchain.com
+            - Host: peer0.importerbank.bridgeit.com
               Port: 7051
     - &Exporterbank
         Name: ExporterbankMSP
         ID: ExporterbankMSP
-        MSPDir: crypto-config/peerOrganizations/exporterbank.blockchain.com/msp
+        MSPDir: crypto-config/peerOrganizations/exporterbank.bridgeit.com/msp
         AnchorPeers:
-            - Host: peer0.exporterbank.blockchain.com
+            - Host: peer0.exporterbank.bridgeit.com
               Port: 7051
     - &Custom
         Name: CustomMSP
         ID: CustomMSP
-        MSPDir: crypto-config/peerOrganizations/custom.blockchain.com/msp
+        MSPDir: crypto-config/peerOrganizations/custom.bridgeit.com/msp
         AnchorPeers:
-            - Host: peer0.custom.blockchain.com
+            - Host: peer0.custom.bridgeit.com
               Port: 7051
 
 ################################################################################
@@ -130,7 +130,7 @@ Orderer: &OrdererDefaults
     OrdererType: solo
 
     Addresses:
-        - orderer.blockchain.com:7050
+        - orderer.bridgeit.com:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s

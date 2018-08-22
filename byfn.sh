@@ -174,7 +174,7 @@ function networkUp () {
 # Stop the orderer and peers, backup the ledger from orderer and peers, cleanup chaincode containers and images
 # and relaunch the orderer and peers with latest tag
 function upgradeNetwork () {
-  docker inspect  -f '{{.Config.Volumes}}' orderer.blockchain.com |grep -q '/var/hyperledger/production/orderer'
+  docker inspect  -f '{{.Config.Volumes}}' orderer.bridgeit.com |grep -q '/var/hyperledger/production/orderer'
   if [ $? -ne 0 ]; then
     echo "ERROR !!!! This network does not appear to be using volumes for its ledgers, did you start from fabric-samples >= v1.0.6?"
     exit 1
@@ -197,11 +197,11 @@ function upgradeNetwork () {
   docker-compose $COMPOSE_FILES up -d --no-deps cli
 
   echo "Upgrading orderer"
-  docker-compose $COMPOSE_FILES stop orderer.blockchain.com
-  docker cp -a orderer.blockchain.com:/var/hyperledger/production/orderer $LEDGERS_BACKUP/orderer.blockchain.com
-  docker-compose $COMPOSE_FILES up -d --no-deps orderer.blockchain.com
+  docker-compose $COMPOSE_FILES stop orderer.bridgeit.com
+  docker cp -a orderer.bridgeit.com:/var/hyperledger/production/orderer $LEDGERS_BACKUP/orderer.bridgeit.com
+  docker-compose $COMPOSE_FILES up -d --no-deps orderer.bridgeit.com
 
-  for PEER in peer0.importer.blockchain.com peer0.exporter.blockchain.com peer0.importerbank.blockchain.com peer0.exporterbank.blockchain.com peer0.custom.blockchain.com; do
+  for PEER in peer0.importer.bridgeit.com peer0.exporter.bridgeit.com peer0.importerbank.bridgeit.com peer0.exporterbank.bridgeit.com peer0.custom.bridgeit.com; do
     echo "Upgrading peer $PEER"
 
     # Stop the peer and backup its ledger
@@ -245,7 +245,7 @@ function networkDown () {
     removeUnwantedImages
     # remove orderer block and other channel configuration transactions and certs
     rm -rf channel-artifacts/*.block channel-artifacts/*.tx crypto-config ./org3-artifacts/crypto-config/ channel-artifacts/org3.json
-    # remove the docker-compose yaml file that was customized to the blockchain
+    # remove the docker-compose yaml file that was customized to the bridgeit
     rm -f docker-compose-e2e.yaml
   fi
 }
@@ -269,23 +269,23 @@ function replacePrivateKey () {
   # The next steps will replace the template's contents with the
   # actual values of the private key file names for the two CAs.
   CURRENT_DIR=$PWD
-  cd crypto-config/peerOrganizations/importer.blockchain.com/ca/
+  cd crypto-config/peerOrganizations/importer.bridgeit.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "s/CA1_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
-  cd crypto-config/peerOrganizations/exporter.blockchain.com/ca/
+  cd crypto-config/peerOrganizations/exporter.bridgeit.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "s/CA2_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
-  cd crypto-config/peerOrganizations/importerbank.blockchain.com/ca/
+  cd crypto-config/peerOrganizations/importerbank.bridgeit.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "s/CA3_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
-  cd crypto-config/peerOrganizations/exporterbank.blockchain.com/ca/
+  cd crypto-config/peerOrganizations/exporterbank.bridgeit.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "s/CA4_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
-  cd crypto-config/peerOrganizations/custom.blockchain.com/ca/
+  cd crypto-config/peerOrganizations/custom.bridgeit.com/ca/
   PRIV_KEY=$(ls *_sk)
   cd "$CURRENT_DIR"
   sed $OPTS "s/CA5_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose-e2e.yaml
@@ -357,7 +357,7 @@ function generateCerts (){
 # These headers are important, as we will pass them in as arguments when we create
 # our artifacts.  This file also contains two additional specifications that are worth
 # noting.  Firstly, we specify the anchor peers for each Peer Org
-# (``peer0.Importer.blockchain.com`` & ``peer0.Exporter.blockchain.com`` & ``peer0.Importerbank.blockchain.com`` &       #``peer0.Exporterbank.blockchain.com`` & ``peer0.Custom.blockchain.com``).  Secondly, we point to
+# (``peer0.Importer.bridgeit.com`` & ``peer0.Exporter.bridgeit.com`` & ``peer0.Importerbank.bridgeit.com`` &       #``peer0.Exporterbank.bridgeit.com`` & ``peer0.Custom.bridgeit.com``).  Secondly, we point to
 # the location of the MSP directory for each member, in turn allowing us to store the
 # root certificates for each Org in the orderer genesis block.  This is a critical
 # concept. Now any network entity communicating with the ordering service can have
