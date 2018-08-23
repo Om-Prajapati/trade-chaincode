@@ -10,7 +10,7 @@ volumes:
   peer0.importer.bridgeit.com:
   peer0.exporter.bridgeit.com:
   peer0.importerbank.bridgeit.com:
-  peer0.exporterbank.bridgeit.com:
+  peer0.insurance.bridgeit.com:
   peer0.custom.bridgeit.com:
 
 networks:
@@ -71,16 +71,16 @@ services:
     image: hyperledger/fabric-ca:$IMAGE_TAG
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-      - FABRIC_CA_SERVER_CA_NAME=ca-exporterbank
+      - FABRIC_CA_SERVER_CA_NAME=ca-insurance
       - FABRIC_CA_SERVER_TLS_ENABLED=false
-      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.exporterbank.bridgeit.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.insurance.bridgeit.com-cert.pem
       - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY
     ports:
       - "10054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.exporterbank.bridgeit.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.insurance.bridgeit.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d'
     volumes:
-      - ./crypto-config/peerOrganizations/exporterbank.bridgeit.com/ca/:/etc/hyperledger/fabric-ca-server-config
-    container_name: ca_peerExporterbank
+      - ./crypto-config/peerOrganizations/insurance.bridgeit.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerinsurance
     networks:
       - trade
 
@@ -133,11 +133,11 @@ services:
     networks:
       - trade
 
-  peer0.exporterbank.bridgeit.com:
-    container_name: peer0.exporterbank.bridgeit.com
+  peer0.insurance.bridgeit.com:
+    container_name: peer0.insurance.bridgeit.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.exporterbank.bridgeit.com
+      service: peer0.insurance.bridgeit.com
     networks:
       - trade
 

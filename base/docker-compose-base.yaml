@@ -92,22 +92,22 @@ services:
       - 9051:7051
       - 9053:7053
 
-  peer0.exporterbank.bridgeit.com:
-    container_name: peer0.exporterbank.bridgeit.com
+  peer0.insurance.bridgeit.com:
+    container_name: peer0.insurance.bridgeit.com
     extends:
       file: peer-base.yaml
       service: peer-base
     environment:
-      - CORE_PEER_ID=peer0.exporterbank.bridgeit.com
-      - CORE_PEER_ADDRESS=peer0.exporterbank.bridgeit.com:7051
-    # - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.exporterbank.bridgeit.com:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.exporterbank.bridgeit.com:7051
-      - CORE_PEER_LOCALMSPID=ExporterbankMSP
+      - CORE_PEER_ID=peer0.insurance.bridgeit.com
+      - CORE_PEER_ADDRESS=peer0.insurance.bridgeit.com:7051
+    # - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.insurance.bridgeit.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.insurance.bridgeit.com:7051
+      - CORE_PEER_LOCALMSPID=InsuranceMSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../crypto-config/peerOrganizations/exporterbank.bridgeit.com/peers/peer0.exporterbank.bridgeit.com/msp:/etc/hyperledger/fabric/msp
-        - ../crypto-config/peerOrganizations/exporterbank.bridgeit.com/peers/peer0.exporterbank.bridgeit.com/tls:/etc/hyperledger/fabric/tls
-        - peer0.exporterbank.bridgeit.com:/var/hyperledger/production
+        - ../crypto-config/peerOrganizations/insurance.bridgeit.com/peers/peer0.insurance.bridgeit.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/insurance.bridgeit.com/peers/peer0.insurance.bridgeit.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.insurance.bridgeit.com:/var/hyperledger/production
     ports:
       - 10051:7051
       - 10053:7053

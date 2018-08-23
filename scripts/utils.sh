@@ -57,13 +57,13 @@ setGlobals () {
 		fi
 
 	elif [ $ORG -eq 4 ] ; then
-		CORE_PEER_LOCALMSPID="ExporterbankMSP"
-		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/exporterbank.bridgeit.com/peers/peer0.exporterbank.bridgeit.com/tls/ca.crt
-		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/exporterbank.bridgeit.com/users/Admin@exporterbank.bridgeit.com/msp
+		CORE_PEER_LOCALMSPID="InsuranceMSP"
+		CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/insurance.bridgeit.com/peers/peer0.insurance.bridgeit.com/tls/ca.crt
+		CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/insurance.bridgeit.com/users/Admin@insurance.bridgeit.com/msp
 		if [ $PEER -eq 0 ]; then
-			CORE_PEER_ADDRESS=peer0.exporterbank.bridgeit.com:7051
+			CORE_PEER_ADDRESS=peer0.insurance.bridgeit.com:7051
 		# else
-		# 	CORE_PEER_ADDRESS=peer1.exporterbank.bridgeit.com:7051
+		# 	CORE_PEER_ADDRESS=peer1.insurance.bridgeit.com:7051
 		fi
 
 	elif [ $ORG -eq 5 ] ; then

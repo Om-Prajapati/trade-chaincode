@@ -10,7 +10,7 @@ volumes:
   peer0.importer.bridgeit.com:
   peer0.exporter.bridgeit.com:
   peer0.importerbank.bridgeit.com:
-  peer0.exporterbank.bridgeit.com:
+  peer0.insurance.bridgeit.com:
   peer0.custom.bridgeit.com:
   
 networks:
@@ -50,11 +50,11 @@ services:
     networks:
       - trade
 
-  peer0.exporterbank.bridgeit.com:
-    container_name: peer0.exporterbank.bridgeit.com
+  peer0.insurance.bridgeit.com:
+    container_name: peer0.insurance.bridgeit.com
     extends:
       file:  base/docker-compose-base.yaml
-      service: peer0.exporterbank.bridgeit.com
+      service: peer0.insurance.bridgeit.com
     networks:
       - trade
 
@@ -98,7 +98,7 @@ services:
       - peer0.importer.bridgeit.com
       - peer0.exporter.bridgeit.com
       - peer0.importerbank.bridgeit.com
-      - peer0.exporterbank.bridgeit.com
+      - peer0.insurance.bridgeit.com
       - peer0.custom.bridgeit.com
     networks:
       - trade

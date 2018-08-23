@@ -29,7 +29,7 @@ Profiles:
                     - *Importer
                     - *Exporter
                     - *Importerbank
-                    - *Exporterbank
+                    - *Insurance
                     - *Custom
 
     TwoOrgsChannel:
@@ -40,7 +40,7 @@ Profiles:
                     - *Importer
                     - *Exporter
                     - *Importerbank
-                    - *Exporterbank
+                    - *Insurance
                     - *Custom
             Capabilities:
                 <<: *ApplicationCapabilities
@@ -100,12 +100,12 @@ Organizations:
         AnchorPeers:
             - Host: peer0.importerbank.bridgeit.com
               Port: 7051
-    - &Exporterbank
-        Name: ExporterbankMSP
-        ID: ExporterbankMSP
-        MSPDir: crypto-config/peerOrganizations/exporterbank.bridgeit.com/msp
+    - &Insurance
+        Name: InsuranceMSP
+        ID: InsuranceMSP
+        MSPDir: crypto-config/peerOrganizations/insurance.bridgeit.com/msp
         AnchorPeers:
-            - Host: peer0.exporterbank.bridgeit.com
+            - Host: peer0.insurance.bridgeit.com
               Port: 7051
     - &Custom
         Name: CustomMSP

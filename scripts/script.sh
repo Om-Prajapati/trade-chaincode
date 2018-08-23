@@ -83,7 +83,7 @@ echo "Updating anchor peers for Exporter..."
 updateAnchorPeers 0 2
 echo "Updating anchor peers for Importerbank..."
 updateAnchorPeers 0 3
-echo "Updating anchor peers for Exporterbank..."
+echo "Updating anchor peers for Insurance..."
 updateAnchorPeers 0 4
 echo "Updating anchor peers for Custom..."
 updateAnchorPeers 0 5

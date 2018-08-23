@@ -90,8 +90,8 @@ PeerOrgs:
     Users:
       Count: 1
   # ---------------------------------------------------------------------------
-  - Name: Exporterbank
-    Domain: exporterbank.bridgeit.com
+  - Name: Insurance
+    Domain: insurance.bridgeit.com
     EnableNodeOUs: true
     Template:
       Count: 1
