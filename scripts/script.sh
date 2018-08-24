@@ -23,9 +23,9 @@ MAX_RETRY=5
 CORE_PEER_TLS_ENABLED="false"
 ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/bridgeit.com/orderers/orderer.bridgeit.com/msp/tlscacerts/tlsca.bridgeit.com-cert.pem
 
-CC_SRC_PATH="github.com/chaincode/chaincode_example02/go/"
+CC_SRC_PATH="github.com/chaincode/my_chaincode/go/"
 if [ "$LANGUAGE" = "node" ]; then
-	CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/chaincode_example02/node/"
+	CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/my_chaincode/node/"
 fi
 
 echo "Channel name : "$CHANNEL_NAME
@@ -90,22 +90,38 @@ updateAnchorPeers 0 5
 
 
 ## Install chaincode on peer0.org1 and peer0.org2
-#echo "Installing chaincode on peer0.org1..."
-#installChaincode 0 1
-#echo "Install chaincode on peer0.org2..."
-#installChaincode 0 2
+echo "Installing chaincode on peer0.org1..."
+installChaincode 0 1
+echo "Install chaincode on peer0.org2..."
+installChaincode 0 2
+echo "Install chaincode on peer0.org3..."
+installChaincode 0 3
+echo "Install chaincode on peer0.org4..."
+installChaincode 0 4
+echo "Install chaincode on peer0.org5..."
+installChaincode 0 5
 
-# Instantiate chaincode on peer0.org2
-#echo "Instantiating chaincode on peer0.org2..."
-#instantiateChaincode 0 2
+# Instantiate chaincode on peer0.org1
+echo "Instantiating chaincode on peer0.org2..."
+instantiateChaincode 0 2
+
+
 
 # Query chaincode on peer0.org1
 #echo "Querying chaincode on peer0.org1..."
 #chaincodeQuery 0 1 100
 
 # Invoke chaincode on peer0.org1
-#echo "Sending invoke transaction on peer0.org1..."
-#chaincodeInvoke 0 1
+# echo "Sending invoke transaction on peer0.org1..."
+# chaincodeInvoke 0 1
+# echo "Sending invoke transaction on peer0.org2..."
+# chaincodeInvoke 0 2
+# echo "Sending invoke transaction on peer0.org3..."
+# chaincodeInvoke 0 3
+# echo "Sending invoke transaction on peer0.org4..."
+# chaincodeInvoke 0 4
+# echo "Sending invoke transaction on peer0.org5..."
+# chaincodeInvoke 0 5
 
 ## Install chaincode on peer1.org2
 #echo "Installing chaincode on peer1.org2..."

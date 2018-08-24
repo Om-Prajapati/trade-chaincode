@@ -127,45 +127,45 @@ joinChannelWithRetry () {
 	verifyResult $res "After $MAX_RETRY attempts, peer${PEER}.org${ORG} has failed to Join the Channel"
 }
 
-# installChaincode () {
-# 	PEER=$1
-# 	ORG=$2
-# 	setGlobals $PEER $ORG
-# 	VERSION=${3:-1.0}
-#         set -x
-# 	peer chaincode install -n mycc -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
-# 	res=$?
-#         set +x
-# 	cat log.txt
-# 	verifyResult $res "Chaincode installation on peer${PEER}.org${ORG} has Failed"
-# 	echo "===================== Chaincode is installed on peer${PEER}.org${ORG} ===================== "
-# 	echo
-# }
+installChaincode () {
+	PEER=$1
+	ORG=$2
+	setGlobals $PEER $ORG
+	VERSION=${3:-1.0}
+        set -x
+	peer chaincode install -n trade_chaincode -v ${VERSION} -l ${LANGUAGE} -p ${CC_SRC_PATH} >&log.txt
+	res=$?
+        set +x
+	cat log.txt
+	verifyResult $res "Chaincode installation on peer${PEER}.org${ORG} has Failed"
+	echo "===================== Chaincode is installed on peer${PEER}.org${ORG} ===================== "
+	echo
+}
 
-# instantiateChaincode () {
-# 	PEER=$1
-# 	ORG=$2
-# 	setGlobals $PEER $ORG
-# 	VERSION=${3:-1.0}
+instantiateChaincode () {
+	PEER=$1
+	ORG=$2
+	setGlobals $PEER $ORG
+	VERSION=${3:-1.0}
 
-# 	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
-# 	# lets supply it directly as we know it using the "-o" option
-# 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
-#                 set -x
-# 		peer chaincode instantiate -o orderer.bridgeit.com:7050 -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init","a","100","b","200"]}' -P "OR	('importerMSP.peer','Org2MSP.peer')" >&log.txt
-# 		res=$?
-#                 set +x
-# 	else
-#                 set -x
-# 		peer chaincode instantiate -o orderer.bridgeit.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -l ${LANGUAGE} -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('importerMSP.peer','Org2MSP.peer')" >&log.txt
-# 		res=$?
-#                 set +x
-# 	fi
-# 	cat log.txt
-# 	verifyResult $res "Chaincode instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' failed"
-# 	echo "===================== Chaincode Instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
-# 	echo
-# }
+	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
+	# lets supply it directly as we know it using the "-o" option
+	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
+                set -x
+		peer chaincode instantiate -o orderer.bridgeit.com:7050 -C $CHANNEL_NAME -n trade_chaincode -l ${LANGUAGE} -v ${VERSION} -c '{"Args":["init","a","100","b","200"]}' -P "OR('ImporterMSP.peer','ExporterMSP.peer','ImporterbankMSP.peer','CustomMSP.peer','InsuranceMSP.peer')" >&log.txt
+		res=$?
+                set +x
+	else
+                set -x
+		peer chaincode instantiate -o orderer.bridgeit.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n trade_chaincode -l ${LANGUAGE} -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR ('ImporterMSP.peer','ExporterMSP.peer','ImporterbankMSP.peer','CustomMSP.peer','InsuranceMSP.peer')" >&log.txt
+		res=$?
+                set +x
+	fi
+	cat log.txt
+	verifyResult $res "Chaincode instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' failed"
+	echo "===================== Chaincode Instantiation on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
+	echo
+}
 
 # upgradeChaincode () {
 #     PEER=$1
@@ -173,7 +173,7 @@ joinChannelWithRetry () {
 #     setGlobals $PEER $ORG
 
 #     set -x
-#     peer chaincode upgrade -o orderer.bridgeit.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 2.0 -c '{"Args":["init","a","90","b","210"]}' -P "OR ('importerMSP.peer','Org2MSP.peer','Org3MSP.peer')"
+#     peer chaincode upgrade -o orderer.bridgeit.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n trade_chaincode -v 2.0 -c '{"Args":["init","a","90","b","210"]}' -P "OR ('importerMSP.peer','Org2MSP.peer','Org3MSP.peer')"
 #     res=$?
 # 	set +x
 #     cat log.txt
@@ -182,39 +182,39 @@ joinChannelWithRetry () {
 #     echo
 # }
 
-# chaincodeQuery () {
-#   PEER=$1
-#   ORG=$2
-#   setGlobals $PEER $ORG
-#   EXPECTED_RESULT=$3
-#   echo "===================== Querying on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME'... ===================== "
-#   local rc=1
-#   local starttime=$(date +%s)
+chaincodeQuery () {
+  PEER=$1
+  ORG=$2
+  setGlobals $PEER $ORG
+  EXPECTED_RESULT=$3
+  echo "===================== Querying on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME'... ===================== "
+  local rc=1
+  local starttime=$(date +%s)
 
-#   # continue to poll
-#   # we either get a successful response, or reach TIMEOUT
-#   while test "$(($(date +%s)-starttime))" -lt "$TIMEOUT" -a $rc -ne 0
-#   do
-#      sleep $DELAY
-#      echo "Attempting to Query peer${PEER}.org${ORG} ...$(($(date +%s)-starttime)) secs"
-#      set -x
-#      peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt
-# 	 res=$?
-#      set +x
-#      test $res -eq 0 && VALUE=$(cat log.txt | awk '/Query Result/ {print $NF}')
-#      test "$VALUE" = "$EXPECTED_RESULT" && let rc=0
-#   done
-#   echo
-#   cat log.txt
-#   if test $rc -eq 0 ; then
-# 	echo "===================== Query on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
-#   else
-# 	echo "!!!!!!!!!!!!!!! Query result on peer${PEER}.org${ORG} is INVALID !!!!!!!!!!!!!!!!"
-#         echo "================== ERROR !!! FAILED to execute End-2-End Scenario =================="
-# 	echo
-# 	exit 1
-#   fi
-# }
+  # continue to poll
+  # we either get a successful response, or reach TIMEOUT
+  while test "$(($(date +%s)-starttime))" -lt "$TIMEOUT" -a $rc -ne 0
+  do
+     sleep $DELAY
+     echo "Attempting to Query peer${PEER}.org${ORG} ...$(($(date +%s)-starttime)) secs"
+     set -x
+     peer chaincode query -C $CHANNEL_NAME -n trade_chaincode -c '{"Args":["query","a"]}' >&log.txt
+	 res=$?
+     set +x
+     test $res -eq 0 && VALUE=$(cat log.txt | awk '/Query Result/ {print $NF}')
+     test "$VALUE" = "$EXPECTED_RESULT" && let rc=0
+  done
+  echo
+  cat log.txt
+  if test $rc -eq 0 ; then
+	echo "===================== Query on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
+  else
+	echo "!!!!!!!!!!!!!!! Query result on peer${PEER}.org${ORG} is INVALID !!!!!!!!!!!!!!!!"
+        echo "================== ERROR !!! FAILED to execute End-2-End Scenario =================="
+	echo
+	exit 1
+  fi
+}
 
 # fetchChannelConfig <channel_id> <output_json>
 # Writes the current channel config for a given channel to a JSON file
@@ -270,25 +270,25 @@ createConfigUpdate() {
   set +x
 }
 
-# chaincodeInvoke () {
-# 	PEER=$1
-# 	ORG=$2
-# 	setGlobals $PEER $ORG
-# 	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
-# 	# lets supply it directly as we know it using the "-o" option
-# 	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
-#                 set -x
-# 		peer chaincode invoke -o orderer.bridgeit.com:7050 -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
-# 		res=$?
-#                 set +x
-# 	else
-#                 set -x
-# 		peer chaincode invoke -o orderer.bridgeit.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt
-# 		res=$?
-#                 set +x
-# 	fi
-# 	cat log.txt
-# 	verifyResult $res "Invoke execution on peer${PEER}.org${ORG} failed "
-# 	echo "===================== Invoke transaction on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
-# 	echo
-# }
+chaincodeInvoke () {
+	PEER=$1
+	ORG=$2
+	setGlobals $PEER $ORG
+	# while 'peer chaincode' command can get the orderer endpoint from the peer (if join was successful),
+	# lets supply it directly as we know it using the "-o" option
+	if [ -z "$CORE_PEER_TLS_ENABLED" -o "$CORE_PEER_TLS_ENABLED" = "false" ]; then
+                set -x
+		peer chaincode invoke -o orderer.bridgeit.com:7050 -C $CHANNEL_NAME -n trade_chaincode -c '{"Args":["adms","a","b","20","5"]}' >&log.txt
+		res=$?
+                set +x
+	else
+                set -x
+		peer chaincode invoke -o orderer.bridgeit.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n trade_chaincode -c '{"Args":["adms","a","b","20","5"]}' >&log.txt
+		res=$?
+                set +x
+	fi
+	cat log.txt
+	verifyResult $res "Invoke execution on peer${PEER}.org${ORG} failed "
+	echo "===================== Invoke transaction on peer${PEER}.org${ORG} on channel '$CHANNEL_NAME' is successful ===================== "
+	echo
+}
